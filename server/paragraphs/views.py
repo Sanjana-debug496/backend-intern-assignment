@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from .tasks import process_paragraph
 
 from .models import Paragraph
 
@@ -37,7 +38,7 @@ class ParagraphCreateView(APIView):
                     user=request.user,
                     content=para
                 )
-
+                process_paragraph.delay(para)
                 created_paragraphs.append(paragraph.content)
 
         return Response(

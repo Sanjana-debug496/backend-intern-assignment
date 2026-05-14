@@ -83,23 +83,28 @@ WSGI_APPLICATION = 'server.wsgi.application'
 #     }
 # }
 
+import os
+
+
 DATABASES = {
 
     'default': {
 
         'ENGINE': 'django.db.backends.postgresql',
 
-        'NAME': 'backend_assignment_db',
+        'NAME': os.environ.get('DB_NAME'),
 
-        'USER': 'postgres',
+        'USER': os.environ.get('DB_USER'),
 
-        'PASSWORD': 'sanjana123',
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
 
-        'HOST': 'localhost',
+        'HOST': os.environ.get('DB_HOST'),
 
-        'PORT': '5432',
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
+
+CELERY_BROKER_URL = 'redis://redis:6379/0'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
